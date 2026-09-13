@@ -1,6 +1,6 @@
 # Unpol-Checks
 
-Small, result-focused reproduction package for the unpolarized TMD studies in
+Result-focused reproduction package for the unpolarized TMD studies in
 [arXiv:2608.27907](https://arxiv.org/abs/2608.27907).
 
 There are three workflows:

@@ -1,0 +1,16 @@
+name: unpol-checks
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - lhapdf=6.5
+  - matplotlib-base>=3.8,<4
+  - numpy>=1.26,<3
+  - pandas>=2.1,<3
+  - scipy>=1.11,<2
+  - pip:
+      # CPU wheels keep this environment portable. Install a CUDA wheel from
+      # pytorch.org instead if GPU acceleration is desired.
+      - --index-url https://download.pytorch.org/whl/cpu
+      - torch>=2.2,<3

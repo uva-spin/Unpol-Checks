@@ -6,13 +6,21 @@ the archived b-space W kernel, includes correlated dataset normalizations, and
 performs two PyTorch optimizer updates.  It is intentionally not a replacement
 for the 96-start production campaign.
 
-Create an environment with PyTorch and LHAPDF (including the named PDF set):
+From the repository root, create the tested CPU environment and install the
+PDF tables:
 
 ```bash
-conda create -n unpol-checks -c conda-forge -c pytorch python=3.11 numpy pandas pytorch lhapdf
+conda env create -f environment.yml
 conda activate unpol-checks
-conda install -c conda-forge lhapdf-pdfsets
+bash training-check/scripts/install_pdf_set.sh
 ```
+
+The environment file includes LHAPDF 6.5 and the CPU PyTorch wheel. The PDF
+set is deliberately a separate installation because LHAPDF packages the
+library and PDF tables independently. The script targets the active Conda
+environment so another environment's PDF cache cannot be used accidentally.
+On a cluster with a shared PDF install, set `LHAPDF_DATA_PATH` to its directory
+instead of downloading it again.
 
 Then run, from the repository root:
 

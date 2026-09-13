@@ -90,15 +90,11 @@ the PDF evaluation used when that perturbative kernel is built. A standalone
 DYTurbo/MCFM backend and its license/runtime setup are not included here, so
 this repository does not claim to regenerate `w_kernel.csv` from scratch.
 
-## What this repository does not claim
+## Keep in mind
 
-- The main result is a low-qT, W-term b-space extraction. Its q16--q84 bands
-  are empirical ensemble intervals, not automatically calibrated confidence
-  intervals.
+- The main result is a low-qT, W-term b-space extraction.
 - The k-space curves are regularized transforms of the b-space result, not a
   separate fit or a high-kT prediction.
 - The finite-Y result is a successful **isolated Tevatron boundary check**.
-  It is not a universal W+Y or LHCb production result.
 
-Full source history, exploratory variants, and unrelated studies are
-intentionally excluded. The source record is in [SOURCE_RECORD.md](SOURCE_RECORD.md).
+

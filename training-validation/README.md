@@ -1,10 +1,10 @@
-# Training smoke test
+# Training validation
 
-This directory proves that the archived neural fit can execute.  It runs the
-monotone FiLM nonperturbative model on the 329 accepted rows, multiplies it by
-the archived b-space W kernel, includes correlated dataset normalizations, and
-performs two PyTorch optimizer updates.  It is intentionally not a replacement
-for the 96-start production campaign.
+This directory provides an executable validation of the archived neural fit.
+It runs the monotone FiLM nonperturbative model on the 329 accepted rows,
+multiplies it by the archived b-space W kernel, includes correlated dataset
+normalizations, and performs two PyTorch optimizer updates. It is intentionally
+not a replacement for the 96-start production campaign.
 
 From the repository root, create the tested CPU environment and install the
 PDF tables:
@@ -12,7 +12,7 @@ PDF tables:
 ```bash
 conda env create -f environment.yml
 conda activate unpol-checks
-bash training-check/scripts/install_pdf_set.sh
+bash training-validation/scripts/install_pdf_set.sh
 ```
 
 The environment file includes LHAPDF 6.5 and the CPU PyTorch wheel. The PDF
@@ -25,16 +25,16 @@ instead of downloading it again.
 Then run, from the repository root:
 
 ```bash
-python training-check/scripts/check_environment.py
-python training-check/scripts/run_training_smoke.py
-python training-check/scripts/run_training_smoke.py --start fresh
+python training-validation/scripts/verify_environment.py
+python training-validation/scripts/run_training_validation.py
+python training-validation/scripts/run_training_validation.py --start fresh
 ```
 
 The first command tests the frozen checkpoint compatibility path. The optional
 `--start fresh` command starts the documented network architecture and dataset
 normalizations from scratch. Both expected final lines begin `PASS:`. The
 numerical objective is allowed to vary slightly across PyTorch builds; it must
-remain finite. The result file is written to `training-check/results/`.
+remain finite. The result file is written to `training-validation/results/`.
 
 `w_kernel.csv` is the input to the neural fit.  LHAPDF is used by the separate
 perturbative-cache construction stage, not by this cached-kernel optimization.

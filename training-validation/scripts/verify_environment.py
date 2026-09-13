@@ -12,7 +12,7 @@ except RuntimeError as exc:
     raise SystemExit(
         f"FAIL: {PDF_SET}/0 is not visible to this Python environment. "
         "Activate the Conda environment and run "
-        "bash training-check/scripts/install_pdf_set.sh.\n"
+        "bash training-validation/scripts/install_pdf_set.sh.\n"
         f"LHAPDF search paths: {lhapdf.paths()}\n{exc}"
     ) from exc
 value = pdf.xfxQ2(2, 0.1, 100.0)

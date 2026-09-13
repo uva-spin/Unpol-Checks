@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Run real optimization steps on the archived 329-point fit input.
+"""Validate the archived neural-fit calculation with real optimizer updates.
 
-This is a smoke test: it verifies the neural model, cached W kernel, data,
-nuisance normalizations, backpropagation, and optimizer work together.  It is
-not the 96-start production ensemble.
+This verifies the neural model, cached W kernel, data, nuisance normalizations,
+backpropagation, and optimizer as one calculation. It is a defined validation
+run, not a substitute for the 96-start production ensemble.
 """
 from __future__ import annotations
 
@@ -97,7 +97,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--updates", type=int, default=2, help="optimizer updates (default: 2)")
     parser.add_argument("--start", choices=("frozen", "fresh"), default="frozen", help="checkpoint compatibility or fresh-start check")
-    parser.add_argument("--output", type=Path, default=ROOT / "results" / "training-smoke.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "results" / "training-validation.json")
     args = parser.parse_args()
     if args.updates < 1:
         raise ValueError("--updates must be positive")
@@ -111,15 +111,15 @@ def main() -> None:
     b, kernel = load_kernel(rows, dtype)
     model = NonperturbativeFactor().to(dtype)
     if args.start == "frozen":
-        state = torch.load(DATA / "initial_model.pt", map_location="cpu", weights_only=True)
+        state = torch.load(DATA / "reference_model.pt", map_location="cpu", weights_only=True)
         model.load_state_dict({key.removeprefix("np_factor."): value for key, value in state.items() if key.startswith("np_factor.")})
     else:
         nn.init.zeros_(model.head.weight)
         nn.init.constant_(model.head.bias, math.log(math.expm1(0.05)))
     datasets = list(dict.fromkeys(rows.dataset.astype(str)))
     index = torch.tensor(rows.dataset.astype(str).map({name: i for i, name in enumerate(datasets)}).to_numpy(), dtype=torch.long)
-    initial = pd.read_csv(DATA / "initial_normalizations.csv").set_index("dataset").norm_scale
-    scale_values = [initial[name] for name in datasets] if args.start == "frozen" else [1.0] * len(datasets)
+    reference_normalizations = pd.read_csv(DATA / "reference_normalizations.csv").set_index("dataset").norm_scale
+    scale_values = [reference_normalizations[name] for name in datasets] if args.start == "frozen" else [1.0] * len(datasets)
     scales = nn.Parameter(torch.tensor(scale_values, dtype=dtype))
     x1, x2 = (torch.tensor(rows[name].to_numpy(), dtype=dtype) for name in ("x1", "x2"))
     target, sigma = (torch.tensor(rows[name].to_numpy(), dtype=dtype) for name in ("target_used", "sigma_used"))

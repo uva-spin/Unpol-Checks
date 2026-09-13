@@ -14,16 +14,16 @@ The included frozen inputs are copied without numerical modification from:
 | `finite-y/data/*` | `systematics/finite_y_completion_2026/reports/` |
 | `finite-y/data/boundary_rows.csv` | frozen 24-row Tevatron NLO boundary input |
 | `finite-y/data/endpoint_predictions.csv` | 96 frozen lambda=1 endpoint predictions |
-| `training-check/data/fit_rows.csv` | 329 accepted rows from the frozen reference prediction table |
-| `training-check/data/initial_model.pt` | frozen central-state FiLM checkpoint |
-| `training-check/data/initial_normalizations.csv` | frozen central-state correlated normalizations |
-| `training-check/data/w_kernel.csv` | cached perturbative W grid used by the neural fit |
+| `training-validation/data/fit_rows.csv` | 329 accepted rows from the frozen reference prediction table |
+| `training-validation/data/reference_model.pt` | frozen central-state FiLM checkpoint |
+| `training-validation/data/reference_normalizations.csv` | frozen central-state correlated normalizations |
+| `training-validation/data/w_kernel.csv` | cached perturbative W grid used by the neural fit |
 
 The paper is the interpretive reference. The authoritative result boundaries
 are recorded in the copied audit/decision files, which are checked by the two
 verification scripts.
 
-The training smoke test uses a small, self-contained implementation of the
+The training validation uses a small, self-contained implementation of the
 archived monotone FiLM factor and cache-based fit objective. It verifies actual
 gradient updates, not a full campaign. The original 96-start, 50-pseudo-data
 production ensemble and a standalone perturbative W-cache builder are outside

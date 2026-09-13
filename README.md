@@ -3,12 +3,13 @@
 Small, result-focused reproduction package for the unpolarized TMD studies in
 [arXiv:2608.27907](https://arxiv.org/abs/2608.27907).
 
-There are only two workflows:
+There are three workflows:
 
 | What you want to check | Start here | One command |
 | --- | --- | --- |
 | Recreate and validate the nominal b-space and regularized k-space result | [main-result](main-result/README.md) | `python main-result/scripts/verify_main_result.py` |
 | Validate the 24-point Tevatron finite-Y boundary study | [finite-y](finite-y/README.md) | `python finite-y/scripts/verify_finite_y.py` |
+| Check that the cached-kernel neural fit and its environment can really train | [training-check](training-check/README.md) | `python training-check/scripts/run_training_smoke.py` |
 
 ## Quick start
 
@@ -31,6 +32,11 @@ the original 96-by-50 fit campaign or DYTurbo/MCFM integrations; those are
 large computations with nonredistributable external engines and archived
 caches. The supplied tables are the frozen, audit-backed numerical results of
 those calculations.
+
+For a real optimizer smoke test, use the separate environment and commands in
+[training-check](training-check/README.md). It validates PyTorch, LHAPDF and
+the required PDF set, then runs neural-fit updates against the archived W
+kernel.
 
 ## What this repository does not claim
 
